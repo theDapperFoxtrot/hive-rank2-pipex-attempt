@@ -6,7 +6,7 @@
 /*   By: smishos <smishos@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 13:50:52 by smishos           #+#    #+#             */
-/*   Updated: 2024/06/26 15:06:01 by smishos          ###   ########.fr       */
+/*   Updated: 2024/08/08 16:38:14 by smishos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,6 @@ typedef struct s_pipex
 void	execute_command(char **cmd, char *path_cmd, char **envp);
 char	*get_command_path(char *cmd, char **envp);
 void	error_exit(char *message);
-void	ft_free_split(char **split);
+void	free_split(char **split);
 
 #endif

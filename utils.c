@@ -6,7 +6,7 @@
 /*   By: smishos <smishos@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 16:42:43 by smishos           #+#    #+#             */
-/*   Updated: 2024/06/26 15:04:14 by smishos          ###   ########.fr       */
+/*   Updated: 2024/08/08 16:38:21 by smishos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,12 @@ char	*get_command_path(char *cmd, char **envp)
 		free(path);
 		if (access(full_path, X_OK) == 0)
 		{
-			ft_free_split(paths);
+			free_split(paths);
 			return (full_path);
 		}
 		free(full_path);
 		i++;
 	}
-	ft_free_split(paths);
+	free_split(paths);
 	return (NULL);
 }

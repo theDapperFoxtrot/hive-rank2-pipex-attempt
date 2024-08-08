@@ -6,7 +6,7 @@
 /*   By: smishos <smishos@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 13:50:58 by smishos           #+#    #+#             */
-/*   Updated: 2024/07/16 17:49:06 by smishos          ###   ########.fr       */
+/*   Updated: 2024/08/08 16:38:11 by smishos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	parent_process(t_pipex *pipex, char **envp)
 	execute_command(pipex->cmd2, pipex->path_cmd2, envp);
 }
 
-void	ft_free_split(char **split)
+void	free_split(char **split)
 {
 	int	i;
 
@@ -69,8 +69,8 @@ int	main(int argc, char **argv, char **envp)
 	parent_process(&pipex, envp);
 	close(pipex.infile);
 	close(pipex.outfile);
-	ft_free_split(pipex.cmd1);
-	ft_free_split(pipex.cmd2);
+	free_split(pipex.cmd1);
+	free_split(pipex.cmd2);
 	free(pipex.path_cmd1);
 	free(pipex.path_cmd2);
 	return (0);
