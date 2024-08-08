@@ -6,7 +6,7 @@
 /*   By: smishos <smishos@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 16:42:43 by smishos           #+#    #+#             */
-/*   Updated: 2024/08/08 16:38:21 by smishos          ###   ########.fr       */
+/*   Updated: 2024/08/08 18:16:52 by smishos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	execute_command(char **cmd, char *path_cmd, char **envp)
 {
 	if (execve(path_cmd, cmd, envp) == -1)
-		error_exit("Execution failed");
+		error_exit();
 }
 
 char	*get_command_path(char *cmd, char **envp)
@@ -28,7 +28,7 @@ char	*get_command_path(char *cmd, char **envp)
 	(void)envp;
 	paths = ft_split(getenv("PATH"), ':');
 	if (!paths)
-		error_exit("Path error");
+		error_exit();
 	i = 0;
 	while (paths[i])
 	{

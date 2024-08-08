@@ -6,14 +6,15 @@
 /*   By: smishos <smishos@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 16:43:05 by smishos           #+#    #+#             */
-/*   Updated: 2024/06/26 15:13:24 by smishos          ###   ########.fr       */
+/*   Updated: 2024/08/08 18:16:44 by smishos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
+#include "printf.h"
 
-void	error_exit(char *message)
+void	error_exit(void)
 {
-	perror(message);
+	perror("Error");
 	exit(EXIT_FAILURE);
 }

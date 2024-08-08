@@ -6,7 +6,7 @@
 /*   By: smishos <smishos@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 13:50:58 by smishos           #+#    #+#             */
-/*   Updated: 2024/08/08 16:38:11 by smishos          ###   ########.fr       */
+/*   Updated: 2024/08/08 18:30:52 by smishos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,17 +52,21 @@ int	main(int argc, char **argv, char **envp)
 	t_pipex	pipex;
 
 	if (argc != 5)
-		error_exit("Invalid number of arguments");
+	{
+		ft_putstr_fd("Wrong number of arguments\n", 2);
+		ft_putstr_fd("Expected format: ./pipex file1 cmd1 cmd2 file2\n", 2);
+		exit(0);
+	}
 	pipex.infile = open(argv[1], O_RDONLY);
 	pipex.outfile = open(argv[4], O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (pipex.infile < 0 || pipex.outfile < 0)
-		error_exit("");
+		error_exit();
 	pipex.cmd1 = ft_split(argv[2], ' ');
 	pipex.cmd2 = ft_split(argv[3], ' ');
 	pipex.path_cmd1 = get_command_path(pipex.cmd1[0], envp);
 	pipex.path_cmd2 = get_command_path(pipex.cmd2[0], envp);
 	if (pipe(pipex.pipefd) == -1)
-		error_exit("");
+		error_exit();
 	if (fork() == 0)
 		child_process(&pipex, envp);
 	wait(NULL);
