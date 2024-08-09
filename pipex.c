@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thedapperfoxtrot <thedapperfoxtrot@stud    +#+  +:+       +#+        */
+/*   By: smishos <smishos@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 13:50:58 by smishos           #+#    #+#             */
-/*   Updated: 2024/08/09 17:49:41 by thedapperfo      ###   ########.fr       */
+/*   Updated: 2024/08/09 18:49:24 by smishos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,14 +47,14 @@ void	free_split(char **split)
 	free(split);
 }
 
-void pipex_func(int argc, char **argv, char **envp, t_pipex pipex)
+void pipex_func(char **argv, char **envp, t_pipex pipex)
 {
 		pipex.infile = open(argv[1], O_RDONLY);
 	if (pipex.infile == -1)
-		error_exit(argv[1]);
+		error_exit(argv[1], 0);
 	pipex.outfile = open(argv[4], O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (pipex.outfile == -1)
-		error_exit(argv[4]);
+		error_exit(argv[4], 1);
 	pipex.cmd1 = ft_split(argv[2], ' ');
 	pipex.cmd2 = ft_split(argv[3], ' ');
 	pipex.path_cmd1 = get_command_path(pipex.cmd1[0], envp);
@@ -84,8 +84,6 @@ int	main(int argc, char **argv, char **envp)
 		exit(0);
 	}
 	else
-	{
-		pipex_func(argc, argv, envp, pipex);
-	}
+		pipex_func(argv, envp, pipex);
 	return (0);
 }
