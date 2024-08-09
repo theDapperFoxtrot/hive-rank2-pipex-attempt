@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smishos <smishos@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: thedapperfoxtrot <thedapperfoxtrot@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 13:50:58 by smishos           #+#    #+#             */
-/*   Updated: 2024/08/08 18:30:52 by smishos          ###   ########.fr       */
+/*   Updated: 2024/08/09 17:49:41 by thedapperfo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,20 +47,14 @@ void	free_split(char **split)
 	free(split);
 }
 
-int	main(int argc, char **argv, char **envp)
+void pipex_func(int argc, char **argv, char **envp, t_pipex pipex)
 {
-	t_pipex	pipex;
-
-	if (argc != 5)
-	{
-		ft_putstr_fd("Wrong number of arguments\n", 2);
-		ft_putstr_fd("Expected format: ./pipex file1 cmd1 cmd2 file2\n", 2);
-		exit(0);
-	}
-	pipex.infile = open(argv[1], O_RDONLY);
+		pipex.infile = open(argv[1], O_RDONLY);
+	if (pipex.infile == -1)
+		error_exit(argv[1]);
 	pipex.outfile = open(argv[4], O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	if (pipex.infile < 0 || pipex.outfile < 0)
-		error_exit();
+	if (pipex.outfile == -1)
+		error_exit(argv[4]);
 	pipex.cmd1 = ft_split(argv[2], ' ');
 	pipex.cmd2 = ft_split(argv[3], ' ');
 	pipex.path_cmd1 = get_command_path(pipex.cmd1[0], envp);
@@ -77,5 +71,21 @@ int	main(int argc, char **argv, char **envp)
 	free_split(pipex.cmd2);
 	free(pipex.path_cmd1);
 	free(pipex.path_cmd2);
+}
+
+int	main(int argc, char **argv, char **envp)
+{
+	t_pipex	pipex;
+
+	if (argc != 5)
+	{
+		ft_putstr_fd("Wrong number of arguments\n", 2);
+		ft_putstr_fd("Expected format: ./pipex file1 cmd1 cmd2 file2\n", 2);
+		exit(0);
+	}
+	else
+	{
+		pipex_func(argc, argv, envp, pipex);
+	}
 	return (0);
 }
