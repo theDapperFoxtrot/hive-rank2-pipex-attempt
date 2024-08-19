@@ -6,7 +6,7 @@
 /*   By: smishos <smishos@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 16:42:43 by smishos           #+#    #+#             */
-/*   Updated: 2024/08/14 22:22:50 by smishos          ###   ########.fr       */
+/*   Updated: 2024/08/19 19:41:16 by smishos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,4 +49,40 @@ char	*get_command_path(char *cmd, char **envp)
 	free_split(paths); // Free the split
 	error_exit(cmd, 0); // If the command was not found, exit with an error
 	return (NULL); // Return NULL
+}
+int error_checker(char *string)
+{
+	int i;
+
+	i = 0;
+	while (string[i])
+	{
+		if (string[i] != 0 && (string[i] != '/' || string[i] != '.' || string[i] != ' '))
+			i++;
+		if (string[i] == '/')
+		{
+			i = 0;
+			while (string[i])
+				write(1, &string[i++], 1);
+			write(1, ": ", 2);
+			error_exit("Is a directory", 0);
+		}
+		if (string[i] == '.')
+		{
+			i = 0;
+			while (string[i])
+				write(1, &string[i++], 1);
+			write(1, ": ", 2);
+			error_exit("No such file or directory", 0);
+		}
+		if (string[i] == ' ')
+		{
+			i = 0;
+			while (string[i])
+				write(1, &string[i++], 1);
+			write(1, ": ", 2);
+			error_exit("command not found", 0);
+		}
+	}
+		return (0);
 }

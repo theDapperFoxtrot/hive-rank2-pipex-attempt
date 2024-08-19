@@ -6,7 +6,7 @@
 /*   By: smishos <smishos@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 13:50:52 by smishos           #+#    #+#             */
-/*   Updated: 2024/08/13 18:53:48 by smishos          ###   ########.fr       */
+/*   Updated: 2024/08/19 19:28:44 by smishos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,5 +36,7 @@ void	execute_command(char **cmd, char *path_cmd, char **envp); // Execute the co
 char	*get_command_path(char *cmd, char **envp); // Get the path to the command
 void	error_exit(); // Exit with an error
 void	free_split(char **split); // Free the split
+int		error_checker(char *string); // Check for errors
+
 
 #endif

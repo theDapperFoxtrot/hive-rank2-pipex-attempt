@@ -6,11 +6,12 @@
 /*   By: smishos <smishos@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 13:50:58 by smishos           #+#    #+#             */
-/*   Updated: 2024/08/13 18:53:41 by smishos          ###   ########.fr       */
+/*   Updated: 2024/08/19 20:28:47 by smishos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
+#include <stdio.h>
 
 // Execute the command
 void	child_process(t_pipex *pipex, char **envp)
@@ -53,7 +54,7 @@ void pipex_func(char **argv, char **envp, t_pipex pipex)
 		pipex.infile = open(argv[1], O_RDONLY); // Open the file for reading
 	if (pipex.infile == -1) // Check if the file was opened successfully
 		error_exit(argv[1], 0); // If not, exit with an error
-	pipex.outfile = open(argv[4], O_WRONLY | O_CREAT | O_TRUNC, 0644); // Open the file for writing
+	pipex.outfile = open(argv[4], O_WRONLY | O_CREAT | O_TRUNC, 0777); // Open the file for writing
 	if (pipex.outfile == -1) // Check if the file was opened successfully
 		error_exit(argv[4], 1); // If not, exit with an error
 	pipex.cmd1 = ft_split(argv[2], ' '); // Split the first command
@@ -61,7 +62,6 @@ void pipex_func(char **argv, char **envp, t_pipex pipex)
 		error_exit("Failed to split cmd1", 1); // If not, exit with an error
 	pipex.cmd2 = ft_split(argv[3], ' '); // Split the second command
 	if (!pipex.cmd2) // Check if the split was successful
-		error_exit("Failed to split cmd2", 1); // If not, exit with an error
 	{
 		free_split(pipex.cmd1); // Free the split
 		error_exit("Failed to split cmd2", 1); // Exit with an error
