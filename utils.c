@@ -6,16 +6,16 @@
 /*   By: smishos <smishos@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 16:42:43 by smishos           #+#    #+#             */
-/*   Updated: 2024/08/09 19:45:43 by smishos          ###   ########.fr       */
+/*   Updated: 2024/08/14 22:22:50 by smishos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
-
+// Execute the command
 void	execute_command(char **cmd, char *path_cmd, char **envp)
 {
-	if (execve(path_cmd, cmd, envp) == -1)
-		error_exit();
+	if (execve(path_cmd, cmd, envp) == -1) // Execute the command
+		error_exit(cmd, 1); // If the command failed to execute, exit with an error
 }
 
 char	*get_command_path(char *cmd, char **envp)
@@ -25,25 +25,28 @@ char	*get_command_path(char *cmd, char **envp)
 	char	*full_path;
 	int		i;
 
-	(void)envp;
-	paths = ft_split(getenv("PATH"), ':');
+	while (ft_strnstr(envp[i], "PATH", 4) == 0) // Find the PATH variable
+		i++;
+	paths = ft_split(envp[i] + 5, ':'); // Split the PATH variable
+	i = 0;
+
 	if (!paths)
 		error_exit(cmd, 0);
 	i = 0;
 	while (paths[i])
 	{
-		path = ft_strjoin(paths[i], "/");
-		full_path = ft_strjoin(path, cmd);
-		free(path);
-		if (access(full_path, X_OK) == 0)
+		path = ft_strjoin(paths[i], "/"); // Join the path with a slash
+		full_path = ft_strjoin(path, cmd); // Join the path with the command
+		free(path); // Free the path
+		if (access(full_path, X_OK) == 0) // Check if the command is executable
 		{
-			free_split(paths);
-			return (full_path);
+			free_split(paths); // Free the split
+			return (full_path); // Return the full path
 		}
 		free(full_path);
 		i++;
 	}
-	free_split(paths);
-	error_exit(cmd, 0);
-	return (NULL);
+	free_split(paths); // Free the split
+	error_exit(cmd, 0); // If the command was not found, exit with an error
+	return (NULL); // Return NULL
 }
